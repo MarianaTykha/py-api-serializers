@@ -20,12 +20,12 @@ class ActorSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer(many=True)
-    actors = ActorSerializer(many=True)
+    genres = serializers.SlugRelatedField(slug_field="name", many=True, read_only=True)
+    actors = serializers.SlugRelatedField(slug_field="full_name", many=True, read_only=True)
 
     class Meta:
         model = Movie
-        fields = "__all__"
+        fields = ("id", "title", "genres", "actors")
 
 
 class CinemaHallSerializer(serializers.ModelSerializer):
@@ -37,8 +37,8 @@ class CinemaHallSerializer(serializers.ModelSerializer):
 
 
 class MovieSessionSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer()
-    cinema_hall = CinemaHallSerializer()
+    movie = serializers.StringRelatedField()
+    cinema_hall = serializers.StringRelatedField()
 
     class Meta:
         model = MovieSession
