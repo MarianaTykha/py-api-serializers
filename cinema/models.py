@@ -81,7 +81,6 @@ class Ticket(models.Model):
     seat = models.IntegerField()
 
     def clean(self):
-        # Check if the row and seat are within valid range
         for ticket_attr_value, ticket_attr_name, cinema_hall_attr_name in [
             (self.row, "row", "rows"),
             (self.seat, "seat", "seats_in_row"),
